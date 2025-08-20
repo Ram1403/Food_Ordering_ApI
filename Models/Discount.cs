@@ -12,9 +12,9 @@ namespace Food_Ordering_ApI.Models
         public string Description { get; set; }
 
      
-        public decimal Threshold { get; set; }   // e.g. ₹500
+        public decimal Threshold { get; set; }   
 
         
-        public decimal FlatDiscount { get; set; } // e.g. ₹50
+        public decimal FlatDiscount { get; set; } 
     }
 }

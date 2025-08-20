@@ -20,18 +20,16 @@ namespace Food_Ordering_ApI.Repositories
         }
         public Order PlaceOrder(PlaceOrderRequest request)
         {
-            //  Get the customer
-            //var customer = _context.Users.Find(request.CustomerId);
+            
             var customer = _context.Users
                                    .Include(u => u.UserRole)
                                    .FirstOrDefault(u => u.UserId == request.CustomerId);
-            //if (customer == null || customer.UserRole.role != Role.ADMIN)
-            //    throw new Exception("Invalid customer");
+          
             if (customer == null )
                 throw new Exception("Invalid customer");
 
 
-            // Fetch menu items for given IDs
+            
             var menuItems = _context.MenuItems
                                     .Where(m => request.Items.Select(i => i.MenuItemId).Contains(m.MenuItemId))
                                     .ToList();
@@ -39,7 +37,7 @@ namespace Food_Ordering_ApI.Repositories
             if (menuItems.Count != request.Items.Count)
                 throw new Exception("One or more menu items not found");
 
-            // Calculate Subtotal
+          
             decimal subTotal = 0;
             var orderItems = new List<OrderItem>();
 
@@ -58,19 +56,19 @@ namespace Food_Ordering_ApI.Repositories
                 });
             }
 
-            //  Apply discount if > 500
+            
             var discount = _context.Discounts.FirstOrDefault(d => subTotal >= d.Threshold);
             decimal discountApplied = discount != null ? discount.FlatDiscount : 0;
             decimal finalTotal = subTotal - discountApplied;
 
-            //  Randomly assign a delivery partner
+           
             var deliveryPartners = _context.DeliveryPartners.ToList();
             if (!deliveryPartners.Any())
                 throw new Exception("No delivery partners available");
 
             var assignedPartner = deliveryPartners[_random.Next(deliveryPartners.Count)];
 
-            //  Create order
+            
             var order = new Order
             {
                 CustomerId = customer.UserId,

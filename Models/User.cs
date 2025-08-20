@@ -18,13 +18,13 @@ namespace Food_Ordering_ApI.Models
 
         [Required(ErrorMessage ="password is required")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }  // store hashed password, not plain text
+        public string Password { get; set; }  
 
         [ForeignKey("UserRole")]
         public int UserRole_Id { get; set; }
         public virtual UserRole? UserRole {get;set;}
 
-        // Navigation: A Customer can have many Orders
+       
         //public ICollection<Order> ?Orders { get; set; }
     }
 }

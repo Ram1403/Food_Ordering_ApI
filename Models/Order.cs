@@ -32,7 +32,7 @@ namespace Food_Ordering_ApI.Models
         public int DeliveryPartnerId { get; set; }
         public virtual DeliveryPartner ?DeliveryPartner { get; set; }
 
-        // Navigation property → One Order has many OrderItems
+    
         public virtual ICollection<OrderItem> Items { get; set; }
 
         [ForeignKey("Customer")]
